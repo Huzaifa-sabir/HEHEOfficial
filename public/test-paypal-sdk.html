@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal SDK Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .success {
+            background: #059669;
+            border: 2px solid #10b981;
+        }
+        .error {
+            background: #dc2626;
+            border: 2px solid #ef4444;
+        }
+        .info {
+            background: #3b82f6;
+            border: 2px solid #60a5fa;
+        }
+        .loading {
+            background: #f59e0b;
+            border: 2px solid #fbbf24;
+        }
+        pre {
+            background: #2d2d2d;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        h1 { color: #60a5fa; }
+        h2 { color: #8abcb9; }
+    </style>
+</head>
+<body>
+    <h1>🧪 PayPal SDK Browser Test</h1>
+    <p>This page tests if your browser can load PayPal's JavaScript SDK.</p>
+
+    <div id="status" class="status loading">
+        ⏳ Testing PayPal SDK load...
+    </div>
+
+    <div id="details"></div>
+
+    <h2>What to check if it fails:</h2>
+    <ul>
+        <li>✅ Disable browser extensions (especially ad blockers)</li>
+        <li>✅ Try incognito/private mode</li>
+        <li>✅ Check antivirus/firewall settings</li>
+        <li>✅ Try a different browser (Chrome, Firefox, Edge)</li>
+        <li>✅ Check if VPN is blocking PayPal</li>
+    </ul>
+
+    <script>
+        const CLIENT_ID = "AXStFuY7MPA4weDeG5IbpoMQVFAhrNiA0tLRxfRTOhxh5m_dab-1twoVCt_WLfYfyd8VWuux1IgY2CAC";
+        const statusDiv = document.getElementById('status');
+        const detailsDiv = document.getElementById('details');
+
+        // Log browser info
+        const browserInfo = {
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            onLine: navigator.onLine,
+            cookiesEnabled: navigator.cookieEnabled
+        };
+
+        detailsDiv.innerHTML = `
+            <h2>Browser Information:</h2>
+            <pre>${JSON.stringify(browserInfo, null, 2)}</pre>
+        `;
+
+        // Test PayPal SDK load
+        const script = document.createElement('script');
+        const sdkUrl = `https://www.paypal.com/sdk/js?client-id=${CLIENT_ID}&currency=USD&intent=capture&vault=true&components=buttons,funding-eligibility`;
+
+        console.log('Loading PayPal SDK from:', sdkUrl);
+
+        script.src = sdkUrl;
+        script.onload = function() {
+            console.log('✅ PayPal SDK loaded successfully!');
+            statusDiv.className = 'status success';
+            statusDiv.innerHTML = '✅ SUCCESS! PayPal SDK loaded successfully!<br>Your browser can connect to PayPal.';
+
+            detailsDiv.innerHTML += `
+                <h2>PayPal SDK Details:</h2>
+                <pre>SDK Version: ${window.paypal ? 'Loaded' : 'Not available'}
+PayPal Object: ${typeof window.paypal}
+Available: ${window.paypal ? 'YES' : 'NO'}</pre>
+            `;
+
+            // Try to render a button
+            if (window.paypal && window.paypal.Buttons) {
+                const buttonContainer = document.createElement('div');
+                buttonContainer.id = 'paypal-button-container';
+                buttonContainer.style.marginTop = '20px';
+                document.body.appendChild(buttonContainer);
+
+                detailsDiv.innerHTML += `
+                    <div class="status success" style="margin-top: 20px;">
+                        ✅ PayPal Buttons component is available!<br>
+                        Rendering test button below...
+                    </div>
+                `;
+
+                try {
+                    window.paypal.Buttons({
+                        style: {
+                            layout: 'vertical',
+                            color: 'gold',
+                            shape: 'rect',
+                            label: 'paypal'
+                        }
+                    }).render('#paypal-button-container');
+                } catch (e) {
+                    console.error('Button render error:', e);
+                }
+            }
+        };
+
+        script.onerror = function(error) {
+            console.error('❌ PayPal SDK failed to load!', error);
+            statusDiv.className = 'status error';
+            statusDiv.innerHTML = `
+                ❌ FAILED! PayPal SDK could not be loaded.<br>
+                <strong>Error:</strong> Script failed to load from PayPal servers.<br>
+                <strong>URL:</strong> ${sdkUrl}
+            `;
+
+            detailsDiv.innerHTML += `
+                <h2>Error Details:</h2>
+                <pre>Error Type: Script Load Error
+URL: ${sdkUrl}
+Status: Failed to fetch
+
+Possible Causes:
+1. Browser extension blocking PayPal (ad blocker, privacy tools)
+2. Antivirus/Firewall blocking www.paypal.com
+3. Network/ISP blocking PayPal domain
+4. VPN interference
+5. DNS resolution issue for www.paypal.com</pre>
+
+                <h2>Solutions:</h2>
+                <div class="status info">
+                    <strong>Try these steps:</strong><br><br>
+                    1. Open Chrome/Edge DevTools (F12)<br>
+                    2. Go to Network tab<br>
+                    3. Reload this page<br>
+                    4. Look for the PayPal SDK request<br>
+                    5. Check the status code and error message<br><br>
+
+                    <strong>Then try:</strong><br>
+                    - Open in Incognito/Private mode<br>
+                    - Disable ALL browser extensions<br>
+                    - Try a different browser<br>
+                    - Disable antivirus temporarily<br>
+                    - Check firewall settings<br>
+                    - Disable VPN if active
+                </div>
+            `;
+        };
+
+        // Add script to page
+        document.head.appendChild(script);
+
+        // Test fetch to PayPal
+        setTimeout(() => {
+            fetch('https://www.paypal.com/sdk/js?client-id=' + CLIENT_ID)
+                .then(response => {
+                    console.log('Fetch test:', response.status);
+                    detailsDiv.innerHTML += `
+                        <h2>Direct Fetch Test:</h2>
+                        <pre>Status: ${response.status} ${response.statusText}
+Headers: ${JSON.stringify([...response.headers.entries()], null, 2)}</pre>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Fetch test failed:', error);
+                    detailsDiv.innerHTML += `
+                        <h2>Direct Fetch Test:</h2>
+                        <pre class="error">Error: ${error.message}
+Type: ${error.name}
+
+This confirms the browser CANNOT reach PayPal servers.</pre>
+                    `;
+                });
+        }, 2000);
+    </script>
+</body>
+</html>
