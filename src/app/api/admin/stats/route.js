@@ -4,7 +4,7 @@ import Order from "@app/models/Order";
 import Payment from "@app/models/Payment";
 import Subscription from "@app/models/Subscription";
 import User from "@app/models/User";
-import stripeService from "@lib/stripe";
+// import stripeService from "@lib/stripe"; // Commented out - using PayPal only
 
 // GET /api/admin/stats - Get admin statistics
 export async function GET(request) {
@@ -662,13 +662,11 @@ async function getUserStats(dateFilter) {
 // Handle sync all subscriptions
 async function handleSyncAllSubscriptions(data) {
   try {
-    const { limit = 100 } = data;
-    const result = await stripeService.syncAllSubscriptionsWithStripe(limit);
-
+    // Stripe functionality disabled - using PayPal only
     return NextResponse.json({
-      success: true,
-      data: result
-    });
+      success: false,
+      error: "Stripe sync not available - using PayPal only"
+    }, { status: 501 });
   } catch (error) {
     throw new Error(`Failed to sync subscriptions: ${error.message}`);
   }
@@ -702,8 +700,12 @@ async function handleBulkOrderUpdate(data) {
       for (const order of orders) {
         try {
           const subscription = await Subscription.findOne({ order_id: order._id });
-          if (subscription && subscription.provider_schedule_id) {
-            await stripeService.cancelSubscriptionSchedule(subscription.provider_schedule_id);
+          if (subscription) {
+            // Update subscription status in database
+            await Subscription.findByIdAndUpdate(
+              subscription._id,
+              { status: 'cancelled', updated_at: new Date() }
+            );
           }
         } catch (error) {
           console.warn(`Failed to cancel subscription for order ${order._id}:`, error.message);
