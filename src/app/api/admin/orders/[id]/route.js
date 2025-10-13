@@ -5,7 +5,6 @@ import Product from '@app/models/Product';
 import User from '@app/models/User';
 import Order from '@app/models/Order';
 import Subscription from '@app/models/Subscription';
-import stripeService from "@lib/stripe";
 
 
 // GET /api/admin/orders/[id] - Get order by ID with populated data
