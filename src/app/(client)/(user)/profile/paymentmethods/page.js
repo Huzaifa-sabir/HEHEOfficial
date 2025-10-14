@@ -15,7 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { Toast, ConfirmationModal } from "@components/ui";
-import AddPaymentMethodModalNew from "@components/payments/AddPaymentMethodModalNew";
+import AddPayPalMethodModal from "@components/payments/AddPayPalMethodModal";
 
 export default function PaymentMethodsPage() {
   const router = useRouter();
@@ -445,7 +445,7 @@ export default function PaymentMethodsPage() {
         </div>
 
         {/* Add Payment Method Modal */}
-        <AddPaymentMethodModalNew
+        <AddPayPalMethodModal
           isOpen={showAddModal}
           onClose={() => setShowAddModal(false)}
           onSuccess={handleAddPaymentMethod}
