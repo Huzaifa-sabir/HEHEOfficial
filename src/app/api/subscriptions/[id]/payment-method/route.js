@@ -4,7 +4,7 @@ import Subscription from "@app/models/Subscription";
 import Order from "@app/models/Order";
 import User from "@app/models/User";
 import { authMiddleware } from "@lib/auth";
-import stripeService from "@lib/stripe";
+// import stripeService from "@lib/stripe"; // Stripe disabled - using PayPal only
 
 export async function PATCH(request, { params }) {
   try {
@@ -77,18 +77,11 @@ export async function PATCH(request, { params }) {
       );
     }
 
-    // Update subscription payment method via Stripe
-    const result = await stripeService.updateSubscriptionPaymentMethod(
-      subscription.provider_subscription_id,
-      payment_method_token
+    // Stripe functionality disabled - using PayPal only
+    return NextResponse.json(
+      { success: false, error: "Payment method update not available - using PayPal only" },
+      { status: 501 }
     );
-
-    if (!result.success) {
-      return NextResponse.json(
-        { success: false, error: "Failed to update payment method" },
-        { status: 500 }
-      );
-    }
 
     const updatedOrder = await Order.findByIdAndUpdate(orderId,{
         payment_method_token : payment_method_token

@@ -21,6 +21,8 @@ const paypalOptions = {
   currency: "USD",
   intent: "authorize",  // Must match backend order creation intent
   components: "buttons,funding-eligibility",
+  "enable-funding": "card,venmo",  // Enable card and other funding options
+  "disable-funding": "paylater,credit",  // Disable paylater and credit if not needed
 };
 
 // Log configuration (safe - only shows first 20 chars of client ID)

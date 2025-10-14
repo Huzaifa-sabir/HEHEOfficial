@@ -3,14 +3,14 @@ const mongoose = require("mongoose");
 const PaymentMethodSchema = new mongoose.Schema({
   provider: {
     type: String,
-    enum: ["stripe", "paypal"],
+    enum: ["paypal"],
     required: true,
   },
   token: {
     type: String,
     require: true,
   },
-  customer_id: String, // Stripe customer ID or PayPal customer ID
+  customer_id: String, // PayPal customer ID
   last_four: String,
   is_default: {
     type: Boolean,
@@ -95,7 +95,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    // Stripe / Payment
+    // PayPal Payment
     payment_methods: {
       type: [PaymentMethodSchema],
       default: [],

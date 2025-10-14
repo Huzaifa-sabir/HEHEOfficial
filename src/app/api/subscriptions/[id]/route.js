@@ -4,7 +4,7 @@ import Subscription from '@app/models/Subscription';
 import Order from '@app/models/Order';
 import User from '@app/models/User';
 import { authMiddleware } from '@lib/auth';
-import { updateSubscriptionPaymentMethod } from "@lib/stripe"; 
+// import { updateSubscriptionPaymentMethod } from "@lib/stripe"; // Stripe disabled - using PayPal only 
 
 
 // GET /api/subscriptions/[id] - Get subscription by ID

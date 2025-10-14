@@ -35,7 +35,7 @@ const OrderSchema = new mongoose.Schema({
   },
   provider: {
     type: String,
-    enum: ["stripe", "paypal"],
+    enum: ["paypal"],
     required: true,
   },
   status: {

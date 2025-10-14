@@ -568,4 +568,5 @@ class PayPalService {
   }
 }
 
-export default new PayPalService();
+const paypalService = new PayPalService();
+export default paypalService;

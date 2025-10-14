@@ -14,8 +14,6 @@
   "dependencies": {
     "@paypal/react-paypal-js": "^8.8.3",
     "@reduxjs/toolkit": "^2.9.0",
-    "@stripe/react-stripe-js": "^3.9.2",
-    "@stripe/stripe-js": "^7.9.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "jsonwebtoken": "^9.0.2",
@@ -26,8 +24,7 @@
     "nodemailer": "^7.0.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-redux": "^9.2.0",
-    "stripe": "^18.5.0"
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
