@@ -695,7 +695,7 @@ export default function CheckoutSuccessContent() {
                         Phone Support
                       </span>
                     </div>
-                    <p className="text-sm text-white/70 mb-2">1-800-ALIGNER</p>
+                    <p className="text-sm text-white/70 mb-2">+1 978-570-8428</p>
                     <p className="text-xs text-white/60">
                       Mon-Fri, 9AM-6PM EST
                     </p>

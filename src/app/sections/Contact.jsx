@@ -139,9 +139,9 @@ const Contact = () => {
               </div>
               <div>
                 <h3 className="text-white font-medium">Call us</h3>
-                <p className="text-gray-400">+1 (472) 263-1223</p>
+                <p className="text-gray-400">+1 978-570-8428</p>
               </div>
-              <a href="tel:+14722631223" className="ml-auto">
+              <a href="tel:+19785708428" className="ml-auto">
                 <Button variant="ghost" size="sm" className="cursor-pointer">
                   <ArrowRight size={16} />
                 </Button>
