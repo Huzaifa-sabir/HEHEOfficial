@@ -11,6 +11,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/favicon-96x96.png" type="image/png" />
+        <link rel="shortcut icon" href="/images/favicon-96x96.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/images/favicon-96x96.png" />
+      </head>
       <body className="bg-neutral-950">
         <ReduxProvider>
           <PayPalProvider>
