@@ -7,9 +7,9 @@ export const metadata = {
   title: "Hehe Aligners - Smile with Confidence",
   description: "Professional invisible aligners for a perfect smile. Transform your teeth with our custom-made aligners.",
   icons: {
-    icon: "/images/favicon-96x96.png",
-    shortcut: "/images/favicon-96x96.png",
-    apple: "/images/favicon-96x96.png",
+    icon: "/images/favicon-96x96.png?v=1",
+    shortcut: "/images/favicon-96x96.png?v=1",
+    apple: "/images/favicon-96x96.png?v=1",
   },
 };
 
